@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#123d39">
+<meta name="description" content="Connect2Care community support app prototype">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Connect2Care</title>
+<style>
+:root{--green:#123d39;--mint:#e5f3ea;--ink:#18332f;--muted:#61736f;--paper:#f5f8f6;--white:#fff;--line:#e1e9e5;--coral:#fce9e5;--gold:#fff1d9;--blue:#e8edfa}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+header{background:var(--green);color:white;padding:20px 18px 22px;border-radius:0 0 24px 24px}
+.brand{display:flex;align-items:center;gap:11px}.logo{width:46px;height:46px;border-radius:14px;background:#d9f4e8;color:#155e50;display:grid;place-items:center;font-size:25px}
+.brand h1{font-size:20px;margin:0}.brand small{color:#d4e8df;letter-spacing:.08em;font-size:10px}
+.hero{margin-top:24px}.hero h2{font-size:27px;margin:0 0 6px}.hero p{margin:0;color:#e0f0e9}
+main{max-width:680px;margin:auto;padding:18px 15px 95px}.section-title{display:flex;justify-content:space-between;align-items:center;margin:4px 2px 14px;font-weight:750}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tile,.card{background:white;border:1px solid var(--line);border-radius:18px;padding:16px;text-align:left;color:inherit}
+.tile{min-height:125px;cursor:pointer}.tile .emoji{font-size:27px;display:block;margin-bottom:10px}.tile b{display:block}.tile small{color:var(--muted)}
+.tile.coral{background:var(--coral)}.tile.mint{background:var(--mint)}.tile.gold{background:var(--gold)}.tile.blue{background:var(--blue)}
+.card{margin:12px 0}.card h3{margin:0 0 8px}.card p{margin:5px 0;color:var(--muted)}
+.banner{background:var(--green);color:white;border-radius:18px;padding:18px;margin-top:16px}.banner p{color:#d4e8df;margin:6px 0 0}
+button,.btn{border:0;border-radius:12px;padding:12px 15px;background:var(--green);color:white;font-weight:700;font-size:15px;cursor:pointer}
+button.secondary{background:#edf3ef;color:var(--green);border:1px solid var(--line)}
+button:disabled{opacity:.45;cursor:not-allowed}
+label{display:block;font-weight:650;margin:14px 0 6px}input,textarea,select{width:100%;border:1px solid #cbd8d1;border-radius:11px;padding:12px;font:inherit;background:white;color:var(--ink)}
+textarea{min-height:105px;resize:vertical}.choice{display:flex;align-items:center;gap:9px;margin:9px 0}.choice input{width:auto;accent-color:var(--green)}
+.note{background:#f1f5f2;border-radius:12px;padding:12px;color:var(--muted);font-size:13px;margin:14px 0}
+.success{text-align:center;padding:25px 12px}.success .emoji{font-size:42px}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;border-top:1px solid var(--line);display:flex;justify-content:center;gap:5px;padding:9px 6px calc(9px + env(safe-area-inset-bottom));z-index:5}
+nav button{flex:1;max-width:130px;background:white;color:var(--muted);padding:8px 3px;font-size:12px}
+nav button.active{background:var(--mint);color:var(--green)}
+nav span{display:block;font-size:20px;margin-bottom:2px}
+.row{display:flex;gap:12px;align-items:center}.row .grow{flex:1}
+.hidden{display:none!important}.muted{color:var(--muted)}.pill{display:inline-block;background:#e5f3ea;color:#24624d;padding:4px 9px;border-radius:99px;font-size:12px;font-weight:700}
+a{color:var(--green)}
+@media(min-width:600px){header{padding-left:max(22px,calc((100vw - 650px)/2));padding-right:max(22px,calc((100vw - 650px)/2))}}
+</style>
+</head>
+<body>
+<header>
+ <div class="brand"><div class="logo">♡</div><div><h1>Connect2Care</h1><small>EMPOWERING COMMUNITIES</small></div><span class="pill" style="margin-left:auto">Prototype</span></div>
+ <div class="hero"><h2>You are not alone. ♡</h2><p>A first step toward support, care, and assistance.</p></div>
+</header>
+<main id="app"></main>
+<nav aria-label="Main navigation">
+ <button data-page="Home" class="active"><span>⌂</span>Home</button>
+ <button data-page="Report"><span>⚑</span>Report</button>
+ <button data-page="Support"><span>♡</span>Support</button>
+ <button data-page="Emergency"><span>☎</span>Emergency</button>
+</nav>
+<script>
+const app=document.getElementById('app'); let page='Home';
+function setPage(p){page=p;document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===p));render()}
+function render(){
+ if(page==='Home'){app.innerHTML=`
+ <div class="section-title"><span>How can we help you?</span><span class="muted" style="font-size:11px">CONNECT2CARE</span></div>
+ <div class="grid">
+ <button class="tile coral" data-go="Report"><span class="emoji">⚑</span><b>Report an Alert</b><small>Share a concern</small></button>
+ <button class="tile mint" data-go="Support"><span class="emoji">♡</span><b>Available Assistance</b><small>Find support options</small></button>
+ <button class="tile gold" data-go="Emergency"><span class="emoji">☎</span><b>Emergency</b><small>Important contacts</small></button>
+ <button class="tile blue" data-go="Updates"><span class="emoji">♧</span><b>Notifications</b><small>Updates and alerts</small></button>
+ </div>
+ <div class="banner"><b>A little reminder</b><h2 style="margin:8px 0 0">Asking for help is a brave step.</h2><p>You deserve to be heard and treated with respect.</p></div>
+ <div class="card"><h3>Need guidance?</h3><p>Learn how to use the prototype and where to seek help.</p><button class="secondary" data-go="Help">Help & Support</button></div>`}
+ else if(page==='Report'){app.innerHTML=`
+ <div class="section-title">Report an Alert <span class="pill">Sample form</span></div>
+ <p class="muted">Choose the concern you want to report.</p>
+ <form id="reportForm">
+ <label for="kind">Type of concern</label><select id="kind"><option>Abuse or neglect</option><option>Bullying or harassment</option><option>Mental health concern</option><option>Other concern</option></select>
+ <label>Who needs help?</label><label class="choice"><input type="radio" name="who" value="Myself" checked> Myself</label><label class="choice"><input type="radio" name="who" value="Someone I know"> Someone I know</label>
+ <label for="place">General location (optional)</label><input id="place" placeholder="e.g. Barangay or municipality">
+ <label for="details">Additional details (sample only)</label><textarea id="details" required placeholder="Describe the concern without adding sensitive personal details..."></textarea>
+ <div class="note">Safety reminder: Share only necessary information. Avoid confronting anyone suspected of causing harm. This prototype does not send reports to social workers or save submissions.</div>
+ <button type="submit">Preview sample submission</button>
+ </form>`}
+ else if(page==='Support'){app.innerHTML=`
+ <div class="section-title">Available Assistance</div><p class="muted">Possible sources of help and support.</p>
+ ${[['🤝','Social Welfare Services','For family concerns, protection, and social assistance.'],['🧠','Mental Health Support','For emotional struggles and mental health concerns.'],['🛡️','Child Protection','For children who may need safety and protection.'],['👥','Community Support','For guidance from trusted community services.']].map(x=>`<div class="card"><div class="row"><div style="font-size:28px">${x[0]}</div><div class="grow"><h3>${x[1]}</h3><p>${x[2]}</p></div></div><p>Contact your local government or a qualified service provider to ask about available assistance and referral procedures.</p></div>`).join('')}`}
+ else if(page==='Emergency'){app.innerHTML=`
+ <div class="section-title">Emergency Contacts</div><div class="card" style="background:#fff1d9"><div style="font-size:28px">⚠️</div><h2 style="margin:4px 0;color:#80500e">Call 911</h2><p>Philippines emergency hotline. Call if you or someone else is in immediate danger.</p></div>
+ <div class="card"><h3>Important safety reminders</h3><p>• Move to a safer place if possible.</p><p>• Contact a trusted person.</p><p>• Do not confront a suspected offender.</p><p>• Seek help from qualified emergency personnel.</p></div>
+ <p class="note">Other local hotline numbers should be verified with the relevant office before use. If there is immediate danger, call 911 directly.</p>`}
+ else if(page==='Updates'){app.innerHTML=`<div class="section-title">Notifications</div><div class="card success"><div class="emoji">🔔</div><h3>No notifications yet</h3><p>Updates may appear here when a real service is connected.</p></div>`}
+ else if(page==='Help'){app.innerHTML=`<div class="section-title">Help & Support</div><div class="card"><h3>About Connect2Care</h3><p>Connect2Care is a proposed platform to help individuals find social support, report concerns, and access emergency information.</p><p>In a real app, reports must be handled by trained and authorized personnel, with privacy and confidentiality safeguards.</p></div><div class="note">This is a demonstration app. It is not monitored by emergency services or social workers.</div>`}
+}
+document.addEventListener('click',e=>{const go=e.target.closest('[data-go]');if(go)setPage(go.dataset.go)});
+document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click',()=>setPage(b.dataset.page)));
+document.addEventListener('submit',e=>{if(e.target.id==='reportForm'){e.preventDefault();if(!document.getElementById('details').value.trim())return;app.innerHTML=`<div class="card success"><div class="emoji">✓</div><h2>Sample preview complete</h2><p>This report was not sent to anyone and was not saved. The prototype has no live reporting service.</p><button id="backHome">Back to Home</button></div>`;document.getElementById('backHome').onclick=()=>setPage('Home')}});
+render();
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+</script>
+</body>
+</html>
